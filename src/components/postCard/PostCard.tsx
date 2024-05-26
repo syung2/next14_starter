@@ -7,27 +7,29 @@ const PostCard = ({
   id,
   title,
   body,
+  img,
+  slug,
+  createdAt,
 }: {
-  id: number;
+  id: string;
   title: string;
   body: string;
+  img: string;
+  slug: string;
+  createdAt: string;
 }) => {
   return (
     <div className={styles.container}>
       <div className={styles.top}>
         <div className={styles.imgContainer}>
-          <Image
-            src="https://cdn.pixabay.com/photo/2021/09/27/20/47/nature-6662283_640.jpg"
-            alt=""
-            fill
-          />
+          {img && <Image src={img} alt={title} fill />}
         </div>
-        <span className={styles.date}>01.01.2024</span>
+        <span className={styles.date}>{createdAt.toString().slice(4, 16)}</span>
       </div>
       <div className={styles.bottom}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.desc}>{body}</p>
-        <Link href={"/blog/" + id} className={styles.link}>
+        <Link href={"/blog/" + slug} className={styles.link}>
           Read MORE
         </Link>
       </div>
