@@ -5,6 +5,19 @@ import { ParsedUrlQuery } from "querystring";
 import PostUser from "@/components/PostUser/PostUser";
 import { getPost } from "@/lib/data";
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { slug: string };
+}) => {
+  const { slug }: { slug: string } = params;
+  const post = await getPost(slug);
+  return {
+    title: post.title,
+    description: "Post",
+  };
+};
+
 // const getData = async (slug: string | string[] | undefined) => {
 //   try {
 //     const res = await fetch(
@@ -45,21 +58,16 @@ const Slug = async ({
       <div className={styles.textContainer}>
         <h1 className={styles.title}>Title</h1>
         <div className={styles.detail}>
-          <Image
-            className={styles.avatar}
-            src="https://cdn.pixabay.com/photo/2021/09/27/20/47/nature-6662283_640.jpg"
-            alt=""
-            width={50}
-            height={50}
-          />
           {post && (
             <Suspense fallback={<div>Loading...</div>}>
-              <PostUser userId={post.userId} />
+              <PostUser userId={post.userId} img={post.img} />
             </Suspense>
           )}
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>published</span>
-            <span className={styles.detailValue}>01.01.2024</span>
+            <span className={styles.detailValue}>
+              {post.createdAt.toString().slice(4, 16)}
+            </span>
           </div>
         </div>
         <div className={styles.content}>

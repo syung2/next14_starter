@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./blog.module.css";
 import PostCard from "@/components/postCard/PostCard";
 import { getPosts } from "@/lib/data";
+import { Metadata } from "next";
 
 // const getData = async () => {
 //   try {
@@ -17,16 +18,27 @@ import { getPosts } from "@/lib/data";
 //   }
 // };
 
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Blog Posts",
+};
+
 const Blog = async () => {
   // const posts = await getData();
   const posts = await getPosts();
-
   return (
     <div className={styles.container}>
       {posts &&
-        posts.map((post: any) => (
-          <div className={styles.post} key={post.id}>
-            <PostCard id={post.id} title={post.title} body={post.body} />
+        posts.map((post: any, index: number) => (
+          <div className={styles.post} key={index}>
+            <PostCard
+              id={post._id}
+              title={post.title}
+              body={post.desc}
+              img={post.img}
+              slug={post.slug}
+              createdAt={post.createdAt}
+            />
           </div>
         ))}
     </div>

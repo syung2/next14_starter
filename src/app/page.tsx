@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./home.module.css";
 import Image from "next/image";
 const Home = () => {
+  console.log("Home");
   return (
     <div className={styles.container}>
       <div className={styles.textContainer}>
