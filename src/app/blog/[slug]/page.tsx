@@ -18,21 +18,19 @@ export const generateMetadata = async ({
   };
 };
 
-// const getData = async (slug: string | string[] | undefined) => {
-//   try {
-//     const res = await fetch(
-//       "https://jsonplaceholder.typicode.com/posts/" + slug
-//     );
-//     if (!res.ok) {
-//       throw new Error("Failed to fetch data");
-//     }
-//     const data = await res.json();
-//     return data;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     return null;
-//   }
-// };
+const getData = async (slug: string | string[] | undefined) => {
+  try {
+    const res = await fetch("http://localhost:3000/api/blog/" + slug);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+};
 
 const Slug = async ({
   params,
@@ -42,9 +40,9 @@ const Slug = async ({
   searchParams: URLSearchParams;
 }) => {
   console.log(params, searchParams);
-  // const post = await getData(params.slug);
   const { slug }: { slug: string } = params;
-  const post = await getPost(slug);
+  const post = await getData(slug);
+  // const post = await getPost(slug);
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>
@@ -66,7 +64,7 @@ const Slug = async ({
           <div className={styles.detailText}>
             <span className={styles.detailTitle}>published</span>
             <span className={styles.detailValue}>
-              {post.createdAt.toString().slice(4, 16)}
+              {post.createdAt.toString().slice(0, 10)}
             </span>
           </div>
         </div>
